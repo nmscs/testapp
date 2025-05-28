@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Дождь из сердечек</title>
+    <style>
+        body {
+            margin: 0;
+            overflow: hidden;
+            background-color: #ffe6f2;
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+        #controls {
+            position: fixed;
+            top: 10px;
+            left: 0;
+            right: 0;
+            z-index: 100;
+        }
+        button {
+            padding: 10px 20px;
+            font-size: 16px;
+            background-color: #ff66b3;
+            color: white;
+            border: none;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+        button:hover {
+            background-color: #ff3399;
+        }
+        .heart {
+            position: absolute;
+            font-size: 24px;
+            user-select: none;
+            animation: fall linear infinite;
+        }
+        @keyframes fall {
+            to { transform: translateY(100vh); }
+        }
+    </style>
+</head>
+<body>
+    <div id="controls">
+        <button id="colorBtn">Изменить цвет</button>
+    </div>
+
+    <script>
+        const colors = ["❤️", "💙", "💜", "💚", "💛", "🧡"];
+        let currentColor = "❤️";
+
+        function createHeart() {
+            const heart = document.createElement("div");
+            heart.className = "heart";
+            heart.innerHTML = currentColor;
+            heart.style.left = Math.random() * 100 + "vw";
+            heart.style.animationDuration = (Math.random() * 3 + 2) + "s";
+            heart.style.opacity = Math.random() * 0.7 + 0.3;
+
+            document.body.appendChild(heart);
+
+            setTimeout(() => {
+                heart.remove();
+            }, 5000);
+        }
+
+        document.getElementById("colorBtn").addEventListener("click", () => {
+            currentColor = colors[Math.floor(Math.random() * colors.length)];
+            document.querySelectorAll(".heart").forEach(heart => {
+                heart.innerHTML = currentColor;
+            });
+        });
+
+        setInterval(createHeart, 300);
+
+        for (let i = 0; i < 10; i++) {
+            setTimeout(createHeart, i * 200);
+        }
+    </script>
+</body>
+</html>
